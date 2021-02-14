@@ -1,5 +1,4 @@
 // product-item.js
-
 class ProductItem extends HTMLElement {
   constructor() {
     super();
@@ -13,9 +12,10 @@ class ProductItem extends HTMLElement {
     const price = document.createElement('p');
     price.setAttribute('class','price');
     const addCartBtn = document.createElement('button');
+    addCartBtn.innerText = "Add to Cart";
     addCartBtn.onclick = function() {
       alert('Added to Cart!');
-      document.getElementById('cart-count').value++;
+      document.getElementById('cart-count').innerText++;
     };
     const style = document.createElement('style');
     style.textContent = `
