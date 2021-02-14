@@ -3,20 +3,6 @@ class ProductItem extends HTMLElement {
   constructor() {
     super();
     const shadow = this.attachShadow({mode: 'open'});
-    const product = document.createElement('li');
-    product.setAttribute('class','product');
-    const img = document.createElement('img');
-    img.width = 200;
-    const title = document.createElement('p');
-    title.setAttribute('class','title');
-    const price = document.createElement('p');
-    price.setAttribute('class','price');
-    const addCartBtn = document.createElement('button');
-    addCartBtn.innerText = "Add to Cart";
-    addCartBtn.onclick = function() {
-      alert('Added to Cart!');
-      document.getElementById('cart-count').innerText++;
-    };
     const style = document.createElement('style');
     style.textContent = `
       a {
@@ -170,6 +156,10 @@ class ProductItem extends HTMLElement {
         overflow: auto;
         text-overflow: unset;
       }
+
+      img {
+        max-height: 300px;
+      }
       
       /* Custom Element CSS Ends Here */
       
@@ -178,11 +168,6 @@ class ProductItem extends HTMLElement {
       }
     `;
     shadow.appendChild(style);
-    shadow.appendChild(product);
-    product.appendChild(img);
-    product.appendChild(title);
-    product.appendChild(price);
-    product.appendChild(addCartBtn);
   }
 }
 
