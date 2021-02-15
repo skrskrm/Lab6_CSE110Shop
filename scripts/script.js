@@ -32,7 +32,7 @@ window.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem("products_data", JSON.stringify(data));
   }
   let array_data = JSON.parse(localStorage.getItem("products_data"));
-  //console.log(array_data[i].title);
+  console.log(array_data);
 
 
   for(var i = 0; i<20; i++) {
