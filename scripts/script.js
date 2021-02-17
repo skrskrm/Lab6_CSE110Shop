@@ -23,16 +23,25 @@ if(!localStorage.getItem("p0")) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  function fetchData() {
+  async function fetchData() {
+    let response = await fetch('https://fakestoreapi.com/products');
+    let data = await response.json();
+    storeLocal(data);
+    /*
     fetch('https://fakestoreapi.com/products')
     .then( response => response.json() )
     .then(data => storeLocal(data))
+    */
   }
   function storeLoca(data) {
     localStorage.setItem("products_data", JSON.stringify(data));
   }
+  fetchData()
+  .catch(e => {
+    console.log('There has been a problem with your fetch operation: ' + e.message);
+  });
   let array_data = JSON.parse(localStorage.getItem("products_data"));
-  console.log(array_data);
+  //console.log(array_data);
 
 
   for(var i = 0; i<20; i++) {
