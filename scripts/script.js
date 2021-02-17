@@ -23,7 +23,6 @@ if(!localStorage.getItem("p0")) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-
   async function myFetch() {
     try {
       let response = await fetch('https://fakestoreapi.com/products');
@@ -32,66 +31,74 @@ window.addEventListener('DOMContentLoaded', () => {
       } else {
         let data = await response.json();
         localStorage.setItem("products_data", JSON.stringify(data));
+        render();
       }
     } catch(e) {
       console.log(e);
     }
   }
-  myFetch();
-  let array_data = JSON.parse(localStorage.getItem("products_data"));
+  if(localStorage.getItem('products_data') == null) {
+    myFetch();
+  }
+  else {
+    render();
+  }
 
-  for(var i = 0; i<20; i++) {
-    var newItem = document.createElement("product-item");
+  function render() {
+    let array_data = JSON.parse(localStorage.getItem("products_data"));
+    for(var i = 0; i<20; i++) {
+      var newItem = document.createElement("product-item");
 
-    const product = document.createElement('li');
-    product.setAttribute('class','product');
+      const product = document.createElement('li');
+      product.setAttribute('class','product');
 
-    const img = document.createElement('img');
-    img.width = 200;
-    img.src = array_data[i].image;
-    img.alt = array_data[i].title;
+      const img = document.createElement('img');
+      img.width = 200;
+      img.src = array_data[i].image;
+      img.alt = array_data[i].title;
 
-    const title = document.createElement('p');
-    title.setAttribute('class','title');
-    title.innerText = array_data[i].title;
+      const title = document.createElement('p');
+      title.setAttribute('class','title');
+      title.innerText = array_data[i].title;
 
-    const price = document.createElement('p');
-    price.setAttribute('class','price');
-    price.innerText = array_data[i].price;
+      const price = document.createElement('p');
+      price.setAttribute('class','price');
+      price.innerText = array_data[i].price;
 
-    const addCartBtn = document.createElement('button');
-    addCartBtn.setAttribute("id", i);
+      const addCartBtn = document.createElement('button');
+      addCartBtn.setAttribute("id", i);
 
-    if(localStorage.getItem("p"+addCartBtn.id) == "no") {
-      addCartBtn.innerText = "Add to Cart";
-    }
-    else {
-      addCartBtn.innerText = "Remove from Cart";
-      document.getElementById('cart-count').innerText++;
-    }
-    
-    addCartBtn.onclick = function() {
-      if(addCartBtn.innerText == "Add to Cart"){
-        alert('Added to Cart!');
-        document.getElementById('cart-count').innerText++;
-        addCartBtn.innerText = "Remove from Cart";
-        localStorage.setItem("p"+addCartBtn.id, "yes")
+      if(localStorage.getItem("p"+addCartBtn.id) == "no") {
+        addCartBtn.innerText = "Add to Cart";
       }
       else {
-        alert('Removed from Cart!');
-        document.getElementById('cart-count').innerText--;
-        addCartBtn.innerText = "Add to Cart";
-        localStorage.setItem("p"+addCartBtn.id, "no")
+        addCartBtn.innerText = "Remove from Cart";
+        document.getElementById('cart-count').innerText++;
       }
-        
-    };
 
-    product.appendChild(img);
-    product.appendChild(title);
-    product.appendChild(price);
-    product.appendChild(addCartBtn);
-    newItem.shadowRoot.appendChild(product);
-    
-    document.getElementById("product-list").appendChild(newItem);
-  }
+      addCartBtn.onclick = function() {
+        if(addCartBtn.innerText == "Add to Cart"){
+          alert('Added to Cart!');
+          document.getElementById('cart-count').innerText++;
+          addCartBtn.innerText = "Remove from Cart";
+          localStorage.setItem("p"+addCartBtn.id, "yes")
+        }
+        else {
+          alert('Removed from Cart!');
+          document.getElementById('cart-count').innerText--;
+          addCartBtn.innerText = "Add to Cart";
+          localStorage.setItem("p"+addCartBtn.id, "no")
+        }
+
+      };
+
+      product.appendChild(img);
+      product.appendChild(title);
+      product.appendChild(price);
+      product.appendChild(addCartBtn);
+      newItem.shadowRoot.appendChild(product);
+
+      document.getElementById("product-list").appendChild(newItem);
+
+  }};
 });
